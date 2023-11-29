@@ -1,6 +1,7 @@
 package com.mall.mallback.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.mallback.entity.Product;
 import com.mall.mallback.entity.R;
 import com.mall.mallback.service.IProductService;
@@ -25,6 +26,16 @@ public class ProductController {
         List<Product> swiperProductList = productService.list(new QueryWrapper<Product>().eq("isSwiper",true).orderByAsc("swiperSort"));
         Map<String, Object> map = new HashMap<>();
         map.put("message", swiperProductList);
+        return R.ok(map);
+    }
+
+    @GetMapping("/findHot")
+    public R findHot(){
+        Page<Product> page = new Page<>(0, 8);
+        Page<Product> pageProduct = productService.page(page, new QueryWrapper<Product>().eq("isHot",true).orderByDesc("hotDateTime"));
+        List<Product> hotProductList = pageProduct.getRecords();
+        Map<String, Object> map = new HashMap<>();
+        map.put("message", hotProductList);
         return R.ok(map);
     }
 }
