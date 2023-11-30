@@ -4,15 +4,18 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
-@TableName("bigType")
+@TableName("smallType")
 @Data
-public class BigType {
+public class SmallType implements Serializable {
     private Integer id;
     private String name;
     private String remark;
-    private String image="default.jpg";
+    private Integer bigTypeId;
     @TableField(select = false)
-    private List<SmallType> smallTypeList;
+    private BigType bigType;
+    @TableField(select = false)
+    private List<Product> productList;
 }
